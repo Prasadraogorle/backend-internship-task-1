@@ -15,4 +15,12 @@ http://localhost:3000/hello
 ### Response
 Hello World from NestJS API
 
+## PostgreSQL Integration
+
+- PostgreSQL version: 16
+- Database name: hello_world_db
+- ORM: TypeORM
+- Connection: localhost:5432
+
+
 ## Project Structure
