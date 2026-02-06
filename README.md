@@ -1,16 +1,21 @@
 # Backend Internship Task 1
 
-This repository contains the submission for Backend Internship Task 1.
+## Overview
+This repository contains the solution for Backend Internship Task 1.
 
 ## Contents
-- NestJS Hello World API
-- ER Diagram for Doctor–Patient system
-- ER Diagram explanation (text/video)
+- Hello World API built using NestJS with TypeScript
+- ER Diagram for backend flow
+- Explanation video link
+
+## API Details
+- Endpoint: GET /hello
+- URL: http://localhost:3000/hello
+- Response: Hello World from NestJS API
 
 ## Tech Stack
-- Node.js
 - NestJS
 - TypeScript
+- Node.js
 
-## Notes
-This pull request includes updated ER diagram and explanation files as per the task requirements.
+Task completed as part of backend internship assignment.
