@@ -2,10 +2,13 @@ import {
   Controller,
   Post,
   Get,
+  Put,
   Body,
   UseGuards,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
+import type { Request } from 'express';
 import { PatientService } from './patient.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -17,16 +20,45 @@ import { RolesGuard } from '../auth/roles.guard';
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 
+  @Post('profile')
+  createProfile(@Req() req: Request, @Body() body: any) {
+    return this.patientService.createProfile(
+      (req as any).user.userId,
+      body,
+    );
+  }
+
+  @Get('profile')
+  getProfile(@Req() req: Request) {
+    return this.patientService.getProfile(
+      (req as any).user.userId,
+    );
+  }
+
+  @Put('profile')
+  updateProfile(@Req() req: Request, @Body() body: any) {
+    return this.patientService.updateProfile(
+      (req as any).user.userId,
+      body,
+    );
+  }
+
+
   @Post('appointments')
   createAppointment(
-    @Req() req,
-    @Body('doctorId') doctorId: number,
+    @Req() req: Request,
+    @Body('doctorId', ParseIntPipe) doctorId: number,
   ) {
-    return this.patientService.createAppointment(req.user.userId, doctorId);
+    return this.patientService.createAppointment(
+      (req as any).user.userId,
+      doctorId,
+    );
   }
 
   @Get('appointments')
-  getMyAppointments(@Req() req) {
-    return this.patientService.getMyAppointments(req.user.userId);
+  getMyAppointments(@Req() req: Request) {
+    return this.patientService.getMyAppointments(
+      (req as any).user.userId,
+    );
   }
 }

@@ -10,8 +10,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       callbackURL: 'http://localhost:3000/auth/google/callback',
       scope: ['email', 'profile'],
-      passReqToCallback: false,
     });
+  }
+
+  // 🔥 This forces account selection every time
+  authorizationParams() {
+    return {
+      prompt: 'select_account',
+    };
   }
 
   async validate(

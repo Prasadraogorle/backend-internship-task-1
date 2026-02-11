@@ -13,7 +13,9 @@ import { AuthGuard } from '@nestjs/passport';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  // ======================
   // REGISTER
+  // ======================
   @Post('register')
   register(
     @Body('email') email: string,
@@ -22,7 +24,9 @@ export class AuthController {
     return this.authService.register(email, password);
   }
 
+  // ======================
   // LOGIN
+  // ======================
   @Post('login')
   login(
     @Body('email') email: string,
@@ -31,12 +35,18 @@ export class AuthController {
     return this.authService.login(email, password);
   }
 
-  // GOOGLE LOGIN
+  // ======================
+  // GOOGLE LOGIN (ONLY AUTH)
+  // ======================
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleAuth() {}
+  googleAuth() {
+    // handled by passport
+  }
 
+  // ======================
   // GOOGLE CALLBACK
+  // ======================
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req) {

@@ -4,10 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { DoctorModule } from './doctor/doctor.module';
-import { PatientModule } from './patient/patient.module'; // ✅ ADD ONLY THIS
-import { User } from './users/user.entity';
-import { PatientProfile } from './patient/patient.entity';
-import { DoctorProfile } from './doctor/doctor.entity';
+import { PatientModule } from './patient/patient.module';
+import { UsersModule } from './users/users.module'; // ✅ ADD THIS
 
 @Module({
   imports: [
@@ -23,7 +21,8 @@ import { DoctorProfile } from './doctor/doctor.entity';
     }),
     AuthModule,
     DoctorModule,
-    PatientModule, // ✅ ADD ONLY THIS
+    PatientModule,
+    UsersModule, // ✅ ADD THIS
   ],
   controllers: [AppController],
   providers: [AppService],
