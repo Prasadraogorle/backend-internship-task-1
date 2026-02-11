@@ -14,10 +14,6 @@ export class DoctorService {
     private readonly appointmentRepo: Repository<Appointment>,
   ) {}
 
-  // =====================
-  // Doctor Profile Logic
-  // =====================
-
   async createProfile(userId: number, body: any) {
     const existing = await this.doctorRepo.findOne({
       where: { user: { id: userId } },
@@ -54,10 +50,6 @@ export class DoctorService {
     Object.assign(doctor, body);
     return this.doctorRepo.save(doctor);
   }
-
-  // ============================
-  // Doctor Appointment Logic
-  // ============================
 
   async getDoctorAppointments(userId: number) {
     const doctor = await this.getProfile(userId);

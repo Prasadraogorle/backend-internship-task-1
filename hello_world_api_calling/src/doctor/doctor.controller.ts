@@ -10,6 +10,7 @@ import {
   Param,
   ParseIntPipe,
 } from '@nestjs/common';
+import type { Request } from 'express';
 import { DoctorService } from './doctor.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -22,42 +23,46 @@ import { AppointmentStatus } from '../appointment/appointment.entity';
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
-  // =======================
-  // Doctor Profile APIs
-  // =======================
-
   @Post('profile')
-  createProfile(@Req() req, @Body() body) {
-    return this.doctorService.createProfile(req.user.userId, body);
+  createProfile(@Req() req: Request, @Body() body: any) {
+    return this.doctorService.createProfile(
+      (req as any).user.userId,
+      body,
+    );
   }
 
   @Get('profile')
-  getProfile(@Req() req) {
-    return this.doctorService.getProfile(req.user.userId);
+  getProfile(@Req() req: Request) {
+    return this.doctorService.getProfile(
+      (req as any).user.userId,
+    );
   }
 
   @Put('profile')
-  updateProfile(@Req() req, @Body() body) {
-    return this.doctorService.updateProfile(req.user.userId, body);
+  updateProfile(@Req() req: Request, @Body() body: any) {
+    return this.doctorService.updateProfile(
+      (req as any).user.userId,
+      body,
+    );
   }
 
-  // =======================
-  // Doctor Appointment APIs
-  // =======================
+
 
   @Get('appointments')
-  getAppointments(@Req() req) {
-    return this.doctorService.getDoctorAppointments(req.user.userId);
+  getAppointments(@Req() req: Request) {
+    return this.doctorService.getDoctorAppointments(
+      (req as any).user.userId,
+    );
   }
 
   @Patch('appointments/:id/status')
   updateAppointmentStatus(
-    @Req() req,
-    @Param('id', ParseIntPipe) appointmentId: number, // ✅ FIX
-    @Body('status') status: AppointmentStatus,        // ✅ FIX
+    @Req() req: Request,
+    @Param('id', ParseIntPipe) appointmentId: number,
+    @Body('status') status: AppointmentStatus,
   ) {
     return this.doctorService.updateAppointmentStatus(
-      req.user.userId,
+      (req as any).user.userId,
       appointmentId,
       status,
     );

@@ -21,27 +21,41 @@ export class AuthService {
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) return { message: 'User not found' };
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
     return {
       access_token: this.jwtService.sign(payload),
     };
   }
 
+  // ======================
+  // GOOGLE LOGIN
+  // ======================
   async googleLogin(userData: any) {
     let user = await this.userRepository.findOne({
       where: { email: userData.email },
     });
 
     if (!user) {
+      // ✅ role explicitly NULL
       user = this.userRepository.create({
         email: userData.email,
         googleId: userData.googleId,
         name: userData.name,
+        role: null,
       });
       await this.userRepository.save(user);
     }
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role, // null
+    };
 
     return {
       access_token: this.jwtService.sign(payload),
